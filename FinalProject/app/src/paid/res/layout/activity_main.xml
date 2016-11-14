@@ -12,7 +12,7 @@ android:layout_centerInParent="true" android:visibility="gone"/>
 
 <fragment
     android:id="@+id/fragment"
-    android:name="com.udacity.gradle.builditbigger.MainActivityFragment"
+    android:name="com.udacity.gradle.builditbigger.PaidMainActivityFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:layout="@layout/fragment_main" />

@@ -1,21 +1,31 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.util.Pair;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ProgressBar;
+
+import com.example.jokeactivity.JokeDetailActivity;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
+
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,9 +49,21 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke(View view) {
-        Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+    public void tellJoke() {
+        new EndpointsAsyncTask(){
+
+            @Override
+            protected void onPreExecute(){
+                spinner.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                spinner.setVisibility(View.GONE);
+                Intent intent = new Intent(MainActivity.this, JokeDetailActivity.class);
+                intent.putExtra("joke",result);
+                MainActivity.this.startActivity(intent);
+            }
+        }.execute(new Pair<Context, String>(this, "Gourav"));
     }
-
-
 }
